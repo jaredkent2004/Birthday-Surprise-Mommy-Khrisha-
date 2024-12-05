@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fdf6e3;
+            color: #333;
+            text-align: center;
+        }
+
+        #container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .surprise {
+            display: none;
+            margin: 20px 0;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #d9534f;
+        }
+
+        .button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #4cae4c;
+        }
+
+        .animation {
+            width: 150px;
+            height: 150px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">
+        <h1>Just a moment...</h1>
+        <p id="time">00:00:00</p>
+    </div>
+
+    <div id="container">
+        <h1>Happy Birthday, My Love!</h1>
+        <div class="surprise">
+            <img class="animation" src="https://media.giphy.com/media/3o6ozhFQG1l5kQAeAo/giphy.gif" alt="Cake">
+            <p>Here's your favorite cake! 🎂</p>
+        </div>
+
+        <div class="surprise">
+            <img class="animation" src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" alt="Bouquet">
+            <p>And a bouquet of your favorite flowers 💐</p>
+        </div>
+
+        <div class="surprise">
+            <p>I hope this day brings you endless happiness because you deserve it all ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const countdown = document.getElementById("countdown");
+        const container = document.getElementById("container");
+        const timeDisplay = document.getElementById("time");
+        const surprises = document.querySelectorAll(".surprise");
+
+        // Countdown timer to 12 AM
+        const targetTime = new Date();
+        targetTime.setHours(24, 0, 0, 0); // Today at 12 AM
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = targetTime - now;
+
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+                countdown.style.display = "none";
+                container.style.display = "flex";
+
+                // Show each surprise with a delay
+                surprises.forEach((surprise, index) => {
+                    setTimeout(() => {
+                        surprise.style.display = "block";
+                    }, 2000 * index);
+                });
+                return;
+            }
+
+            const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+            const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+            const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+
+            timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
